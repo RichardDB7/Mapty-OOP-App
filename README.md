@@ -1,1 +1,2 @@
-# RichardDB7.github.io
+# RichardDB7
+Hi , my name is Ricardo, I´am Js Developer and Tester
