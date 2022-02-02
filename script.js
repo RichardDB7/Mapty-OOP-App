@@ -11,6 +11,8 @@ const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
 
+let map, mapEvent
+
 if(navigator.geolocation)
 navigator.geolocation.getCurrentPosition(
     
@@ -20,28 +22,36 @@ navigator.geolocation.getCurrentPosition(
         console.log(`https://www.google.com.ar/maps/@${latitude},${longitude}`)
 
         const coords = [latitude,longitude]
-        const map = L.map('map').setView(coords, 15);
+
+        map = L.map('map').setView(coords, 15);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        map.on('click', function (mapEvent) {
+
+        //Handling clicks on map
+        map.on('click', function (mapE) {
+        mapEvent = mapE
          console.log(mapEvent)   
         
         form.classList.remove('hidden')
         inputDistance.focus()
 
-       
-        //function(){
-        
-        //alert('Could not get your position')
-        
-        }
-    )
     })
 
-    form.addEventListener('submit', function(){
+    // function() {
+    //     alert('Could not get your position')
+    // }
+
+
+
+    form.addEventListener('submit', function(e){
+        e.preventDefault()
+
+        //Clear input fields
+        inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = ''
+
         //Display marker
 
         const { lat, lng } = mapEvent.latlng    
@@ -57,6 +67,11 @@ navigator.geolocation.getCurrentPosition(
         .setPopupContent('Workout')
         .openPopup();
         
-
-
     })
+    
+    })
+
+inputType.addEventListener('change', function(){
+    inputElevation.closest('.form__row').classList.toggle('form__row--hidden')
+    inputCadence.closest('.form__row').classList.toggle('form__row--hidden')
+})
