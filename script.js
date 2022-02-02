@@ -27,26 +27,36 @@ navigator.geolocation.getCurrentPosition(
         }).addTo(map);
 
         map.on('click', function (mapEvent) {
-        console.log(mapEvent)   
+         console.log(mapEvent)   
         
-        const { lat, lng } = mapEvent.latlng    
-        
-        L.marker([lat, lng]).addTo(map).bindPopup(L.popup({
-            maxWidth:250,
-            minWidth:100,
-            autoClose: false,
-            closeOnClick: false,
-            className: 'running-popup',
-            
-        }))
-        .setPopupContent('Workout')
-        .openPopup();
-        })
-        
+        form.classList.remove('hidden')
+        inputDistance.focus()
 
+       
         //function(){
         
         //alert('Could not get your position')
         
         }
     )
+    })
+
+    form.addEventListener('submit', function(){
+        //Display marker
+
+        const { lat, lng } = mapEvent.latlng    
+        
+        L.marker([lat, lng]).addTo(map).bindPopup(L.popup({
+           maxWidth:250,
+            minWidth:100,
+            autoClose: false,
+            closeOnClick: false,
+            lassName: 'running-popup',
+            
+        }))
+        .setPopupContent('Workout')
+        .openPopup();
+        
+
+
+    })
